@@ -485,29 +485,61 @@
                   </div>
                 </form>
                 
-                <script>
-                  function sendToWhatsApp(event) {
-                    event.preventDefault(); // Prevent form submission
-                
-                    // Collect the form data
-                    const name = document.getElementById("contact-name").value;
-                    const email = document.getElementById("contact-email").value;
-                    const phone = document.getElementById("contact-phone").value;
-                    const service = document.getElementById("contact-service").value;
-                    const message = document.getElementById("contact-message").value;
-                
-                    // Format the message for WhatsApp
-                    const text = `Hello, I am ${name}. My phone number is ${phone} and my email is ${email}. I am interested in ${service}. Here is my message: ${message}`;
-                    const encodedText = encodeURIComponent(text);
-                
-                    // Replace with your WhatsApp number
-                    const whatsappNumber = '919979239999';
-                
-                    // Open WhatsApp with the formatted message
-                    const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedText}`;
-                    window.open(url, "_blank");
-                  }
-                </script>
+              <script>
+  function sendToWhatsApp(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Collect the form data
+    const name = document.getElementById("contact-name").value;
+    const email = document.getElementById("contact-email").value;
+    const phone = document.getElementById("contact-phone").value;
+    const service = document.getElementById("contact-service").value;
+    const message = document.getElementById("contact-message").value;
+
+    // Format the message for WhatsApp
+    const whatsappText = `Hello, I am ${name}. My phone number is ${phone} and my email is ${email}. I am interested in ${service}. Here is my message: ${message}`;
+    const encodedText = encodeURIComponent(whatsappText);
+    
+    // WhatsApp number
+    const whatsappNumber = '919979239999';
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedText}`;
+
+    // Prepare data for email
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("service", service);
+    formData.append("message", message);
+    formData.append("_subject", `New Contact Form Submission from ${name}`);
+    formData.append("_replyto", email);
+
+    // Send email via FormSubmit (free, works with improvMX)
+    fetch("https://formsubmit.co/ajax/contact@perefeps.ng", {
+      method: "POST",
+      headers: { 
+        'Accept': 'application/json'
+      },
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log("✅ Email sent successfully to your Yahoo via improvMX");
+        alert("✓ Message sent! You will now be redirected to WhatsApp.");
+      } else {
+        console.log("⚠️ Email may not have sent, but WhatsApp will open");
+        alert("✓ Form submitted! You will now be redirected to WhatsApp.");
+      }
+      // Open WhatsApp regardless of email status
+      window.open(whatsappUrl, "_blank");
+    })
+    .catch(error => {
+      console.error("❌ Error:", error);
+      alert("✓ Form submitted! You will now be redirected to WhatsApp.");
+      window.open(whatsappUrl, "_blank");
+    });
+  }
+</script>
                 
               </div>
               <!-- /.contact__panel -->
