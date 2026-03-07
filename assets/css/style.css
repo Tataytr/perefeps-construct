@@ -1518,7 +1518,7 @@ h6 {
 }
 
 .btn__primary {
-  background-color: #98e630;
+  background-color: #DC143C ;
   color: #ffffff;
 }
 
@@ -2672,7 +2672,7 @@ textarea.form-control {
   padding: 0;
   height: 90px;
   max-height: 90px;
-  background-color: #03391f;
+  background-color: #FF0000;
   /*  dropdown-menu  */
 }
 
@@ -3463,7 +3463,7 @@ textarea.form-control {
   .header-topbar > .container-fluid {
     padding-left: 30px;
     padding-right: 30px;
-    background-color: #03391f;
+    background-color: crimson;
   }
   .header-layout1 .navbar-actions {
     padding-left: 40px;
